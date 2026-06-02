@@ -4,9 +4,9 @@
 This repository contains a rigorous quantitative analysis framework evaluating historical Bitcoin (BTC-USD) daily pricing dynamics across **2,222 trading days** (January 2020 – January 2026). The project applies advanced econometric time-series architectures—including Augmented Dickey-Fuller (ADF) tests, ARIMA, and seasonal SARIMA modeling—coupled with deep statistical residual diagnostics to simulate short-term price vectors and isolate structural volatility patterns.
 
 ## Key Metrices & Performance 
-* **Stationarity Transformation:** Successfully stabilized a highly non-stationary asset series, shifting the ADF \(p\)-value from **0.65** to a stationary **\(~0.000\)** via first-order differencing.
-* **Residual Independence:** Validated the mathematical validity of the forecasting models using a Ljung–Box test (\(p \approx 0.51\)), confirming zero remaining autocorrelation within the model residuals.
-* **Volatility Discovery:** Isolated strong mathematical evidence of **heteroskedasticity (volatility clustering)** via a Jarque–Bera and ARCH test (\(p \approx 0.00\)), establishing a clear quantitative foundation for future GARCH modeling.
+* **Stationarity Transformation:** Successfully stabilized a highly non-stationary asset series, shifting the ADF p-value from **0.65** to a stationary **\(~0.000\)** via first-order differencing.
+* **Residual Independence:** Validated the mathematical validity of the forecasting models using a Ljung–Box test (p ≈ 0.51), confirming zero remaining autocorrelation within the model residuals.
+* **Volatility Discovery:** Isolated strong mathematical evidence of **heteroskedasticity (volatility clustering)** via a Jarque–Bera and ARCH test (p ≈ 0.00), establishing a clear quantitative foundation for future GARCH modeling.
 
 ## Data Source
 - **Asset:** Bitcoin (BTC-USD)  
@@ -25,8 +25,8 @@ This repository contains a rigorous quantitative analysis framework evaluating h
 ## Mathematical & Modeling Architecture 
 ### 1. Statistical Profiling & Stationarity Verification
 * **Original Series Data Profile:** Visualized extreme right-skewed pricing distributions and high-amplitude macroeconomic market cycles.
-* **ADF Test (Raw Baseline):** Test Statistic: `-1.24` (\(p\text{-value} = 0.65\)) \(\rightarrow\) Formally failed to reject the null hypothesis of a unit root (Non-Stationary).
-* **First-Order Transformation:** Applied \(\Delta P_t = P_t - P_{t-1}\). Post-transformation ADF Statistic dropped to `-12.57` (\(p\text{-value} \approx 0.00\)) \(\rightarrow\) Rejected the null hypothesis, achieving strict stationarity.
+* **ADF Test (Raw Baseline):** Test Statistic: `-1.24` (p-value = 0.65) → Formally failed to reject the null hypothesis of a unit root (Non-Stationary).
+* **First-Order Transformation:** Applied \(\Delta P_t = P_t - P_{t-1}\). Post-transformation ADF Statistic dropped to `-12.57` (p-value ~ 0.00) → Rejected the null hypothesis, achieving strict stationarity.
 
 ### 2. Parameterization & Stochastic Modeling
 * **ACF & PACF Diagnostics:** Analyzed lag dependencies to prevent over-differencing and accurately isolate autoregressive bounds.
@@ -34,9 +34,9 @@ This repository contains a rigorous quantitative analysis framework evaluating h
 * **SARIMA Framework:** Configured a **SARIMA(1,1,0)(1,1,1)₇** matrix to absorb and model weekly seasonal trading fluctuations inherent to global 24/7 crypto markets.
 
 ### 3. Econometric Residual Diagnostics
-* **Ljung–Box Test (\(p \approx 0.51\)):** Confirms that the model successfully captured the structural information, leaving only white noise behind.
-* **Jarque–Bera Test (\(p \approx 0.00\)):** Proved the residuals exhibit non-normal distributions, typical of heavy-tailed financial asset anomalies.
-* **ARCH Test (\(p \approx 0.00\)):** Formally identified localized volatility clustering, providing mathematical evidence that historical variance influences future market risk.
+* **Ljung–Box Test (p ≈ 0.51)::** Confirms that the model successfully captured the structural information, leaving only white noise behind.
+* **Jarque–Bera Test (p ≈ 0.00):** Proved the residuals exhibit non-normal distributions, typical of heavy-tailed financial asset anomalies.
+* **ARCH Test (p ≈ 0.00):** Formally identified localized volatility clustering, providing mathematical evidence that historical variance influences future market risk.
 
 ## Forecasting Output
 * Engineered a forward-looking **30-day directional price projection** displaying calculated variance bands against historical trend lines.
@@ -65,6 +65,3 @@ bitcoin-time-series-forecasting/
 * **Tivsha Sharma**
 * **Email:** ativshav25@gmail.com
 * **LinkedIn:** https://www.linkedin.com/in/tivsha-sharma-3558b72ba/
-## Author
-**Tivsha Sharma**  
-Applied Statistics | Data Analytics | Time-Series & Forecasting
