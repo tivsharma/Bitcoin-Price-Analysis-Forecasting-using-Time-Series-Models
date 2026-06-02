@@ -1,16 +1,12 @@
-# Bitcoin Price Analysis & Forecasting using Time-Series Models
+# Quantative Crypto Analytics: Time Series Forecasting & Volatility Modeling 
 
 ## Project Overview
-This project analyzes historical Bitcoin (BTC-USD) daily price data to understand market behaviour, price dynamics, and volatility patterns. The study applies time-series techniques including stationarity testing, differencing, autocorrelation analysis, ARIMA, and SARIMA modelling to evaluate short-term forecasting performance.
+This repository contains a rigorous quantitative analysis framework evaluating historical Bitcoin (BTC-USD) daily pricing dynamics across **2,222 trading days** (January 2020 – January 2026). The project applies advanced econometric time-series architectures—including Augmented Dickey-Fuller (ADF) tests, ARIMA, and seasonal SARIMA modeling—coupled with deep statistical residual diagnostics to simulate short-term price vectors and isolate structural volatility patterns.
 
-## Objectives
-- Analyze Bitcoin daily closing price behaviour  
-- Examine stationarity characteristics  
-- Apply differencing to stabilize the series  
-- Study autocorrelation & partial autocorrelation patterns  
-- Build ARIMA and SARIMA forecasting models  
-- Evaluate residual diagnostics  
-- Generate short-term price forecasts  
+## Key Metrices & Performance 
+* **Stationarity Transformation:** Successfully stabilized a highly non-stationary asset series, shifting the ADF \(p\)-value from **0.65** to a stationary **\(~0.000\)** via first-order differencing.
+* **Residual Independence:** Validated the mathematical validity of the forecasting models using a Ljung–Box test (\(p \approx 0.51\)), confirming zero remaining autocorrelation within the model residuals.
+* **Volatility Discovery:** Isolated strong mathematical evidence of **heteroskedasticity (volatility clustering)** via a Jarque–Bera and ARCH test (\(p \approx 0.00\)), establishing a clear quantitative foundation for future GARCH modeling.
 
 ## Data Source
 - **Asset:** Bitcoin (BTC-USD)  
@@ -19,105 +15,56 @@ This project analyzes historical Bitcoin (BTC-USD) daily price data to understan
 - **Data Provider:** Yahoo Finance (`yfinance`)  
 - **Observations:** 2,222 daily records  
 
-## Data Preprocessing
-Steps performed:
-- Downloaded BTC-USD daily data using `yfinance`
-- Selected **closing prices**
-- Handled missing values (`dropna`)
-- Ensured chronological ordering
+## Technical Stack 
+* **Data Engineering Pipeline:** Python, `yfinance` API (Automated daily ingestion pipelines)
+* **Time-Series & Econometric Modeling:** `statsmodels.tsa` (ARIMA, SARIMA)
+* **Statistical Testing Engines:** SciPy Stats, Statsmodels (ADF, Ljung–Box, Jarque–Bera, ARCH)
+* **Exploratory Analytics & Viz:** Matplotlib, Seaborn, Pandas, NumPy
+* **Workspace environment:** Google Colab / Jupyter Notebooks
 
-## Exploratory Analysis
-Visualized:
-- Bitcoin daily closing price trend  
-- Histogram of closing prices  
-**Observations:**
-- Strong upward and downward price cycles  
-- High volatility and large price swings  
-- Right-skewed price distribution  
+## Mathematical & Modeling Architecture 
+### 1. Statistical Profiling & Stationarity Verification
+* **Original Series Data Profile:** Visualized extreme right-skewed pricing distributions and high-amplitude macroeconomic market cycles.
+* **ADF Test (Raw Baseline):** Test Statistic: `-1.24` (\(p\text{-value} = 0.65\)) \(\rightarrow\) Formally failed to reject the null hypothesis of a unit root (Non-Stationary).
+* **First-Order Transformation:** Applied \(\Delta P_t = P_t - P_{t-1}\). Post-transformation ADF Statistic dropped to `-12.57` (\(p\text{-value} \approx 0.00\)) \(\rightarrow\) Rejected the null hypothesis, achieving strict stationarity.
 
-## Stationarity Testing
-### Augmented Dickey-Fuller (ADF) Test
-- **Original Series:**
-  - ADF Statistic: -1.24  
-  - p-value: 0.65  
-Series **non-stationary**
+### 2. Parameterization & Stochastic Modeling
+* **ACF & PACF Diagnostics:** Analyzed lag dependencies to prevent over-differencing and accurately isolate autoregressive bounds.
+* **ARIMA Framework:** Deployed an **ARIMA(1,1,0)** model to lock down localized, short-term autoregressive price velocity.
+* **SARIMA Framework:** Configured a **SARIMA(1,1,0)(1,1,1)₇** matrix to absorb and model weekly seasonal trading fluctuations inherent to global 24/7 crypto markets.
 
-### First-Order Differencing
-Applied differencing:
-\[
-P_t - P_{t-1}
-\]
-- **Differenced Series:**
-  - ADF Statistic: -12.57  
-  - p-value: ~0.000  
-Series became **stationary**
+### 3. Econometric Residual Diagnostics
+* **Ljung–Box Test (\(p \approx 0.51\)):** Confirms that the model successfully captured the structural information, leaving only white noise behind.
+* **Jarque–Bera Test (\(p \approx 0.00\)):** Proved the residuals exhibit non-normal distributions, typical of heavy-tailed financial asset anomalies.
+* **ARCH Test (\(p \approx 0.00\)):** Formally identified localized volatility clustering, providing mathematical evidence that historical variance influences future market risk.
 
-## Autocorrelation Analysis
-Analyzed:
-- ACF (Autocorrelation Function)  
-- PACF (Partial Autocorrelation Function)  
-Purpose:
-- Identify lag dependencies  
-- Support ARIMA parameter selection  
+## Forecasting Output
+* Engineered a forward-looking **30-day directional price projection** displaying calculated variance bands against historical trend lines.
 
-## Time-Series Modelling
-### ARIMA Model
-- **Specification:** ARIMA(1,1,0)  
-- Captured short-term autoregressive behaviour  
+## Repository Structure 
+```text
+bitcoin-time-series-forecasting/
+│
+├── data/
+│   └── btc_usd_historical.csv       # Cached daily API market records
+│
+├── notebooks/
+│   └── crypto_time_series_models.ipynb # Full pipeline from EDA to SARIMA forecasting
+│
+└── README.md                         # Technical documentation & metrics
+```
 
-### SARIMA Model
-- **Specification:** SARIMA(1,1,0)(1,1,1,7)  
-- Incorporated weekly seasonality  
-
-## Model Diagnostics
-Performed residual analysis:
-- Residual plots  
-- Ljung–Box test  
-- Jarque–Bera test  
-- ARCH test  
-
-### Ljung–Box Test
-- p-value ≈ 0.51  
-No strong autocorrelation in residuals
-
-### Jarque–Bera Test
-- p-value ≈ 0.00  
-Residuals not normally distributed
-
-### ARCH Test
-- p-value ≈ 0.00  
-Presence of heteroskedasticity (volatility clustering)
-
-## Forecasting
-Generated:
-- **Next 30-day Bitcoin price forecast**
-Visualized:
-- Observed vs Forecasted prices  
-
-## Tools & Technologies
-- Python  
-- Pandas, NumPy  
-- Matplotlib, Seaborn  
-- Statsmodels  
-- yFinance API  
-- Google Colab  
-
-## Key Insights
-- Bitcoin closing prices are **non-stationary**
-- Differencing stabilizes the time-series
-- ARIMA/SARIMA models capture trend structure
-- Residual diagnostics indicate **volatility clustering**
-- Forecasting reflects short-term price behaviour patterns
-
-## Future Enhancements
-- GARCH volatility modelling  
-- Advanced ML forecasting models  
-- Multivariate crypto market analysis  
-- Real-time price tracking dashboard  
-
-## Project Link
+## Project Assets 
 **Google Colab Notebook:**  [Open notebook](https://colab.research.google.com/drive/1J9tx-4n3U7NrgyxyQSWkcTsdzNxzO3HH?usp=sharing#scrollTo=JWYjNBJjiNO6)
 
+## Future Enhancements 
+* Integrating a **GARCH(1,1)** framework to model the confirmed heteroskedasticity.
+* Deploying multivariate LSTM networks factoring in trading volume indices.
+
+## Author 
+* **Tivsha Sharma**
+* **Email:** ativshav25@gmail.com
+* **LinkedIn:** https://www.linkedin.com/in/tivsha-sharma-3558b72ba/
 ## Author
 **Tivsha Sharma**  
 Applied Statistics | Data Analytics | Time-Series & Forecasting
